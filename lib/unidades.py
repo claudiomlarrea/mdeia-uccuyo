@@ -225,18 +225,36 @@ def respuestas_activas() -> dict[str, Any]:
     return _slot()["respuestas"]
 
 
+def widget_key_respuesta(codigo: str, unidad_id: str | None = None) -> str:
+    """Clave de widget aislada por unidad (evita arrastrar valores entre ámbitos)."""
+    uid = unidad_id or st.session_state.get("mdeia_unidad_activa", SIN_UNIDAD)
+    if uid and uid != SIN_UNIDAD:
+        return f"mdeia_{uid}_{codigo}"
+    return f"mdeia_{codigo}"
+
+
+def _codigo_desde_widget_key(key: str, valid: set[str]) -> str | None:
+    if not key.startswith("mdeia_"):
+        return None
+    uid = st.session_state.get("mdeia_unidad_activa", SIN_UNIDAD)
+    if uid and uid != SIN_UNIDAD and key.startswith(f"mdeia_{uid}_"):
+        codigo = key[len(f"mdeia_{uid}_") :]
+        return codigo if codigo in valid else None
+    codigo = key[len("mdeia_") :]
+    return codigo if codigo in valid else None
+
+
 def sincronizar_respuestas_widgets() -> None:
     """Actualiza respuestas desde widgets antes del sidebar (Streamlit corre sidebar primero)."""
     from lib.mdeia_model import load_indicadores
 
     valid = {i["codigo"] for i in load_indicadores()}
     resp = respuestas_activas()
-    prefix = "mdeia_"
     for key, val in st.session_state.items():
-        if not isinstance(key, str) or not key.startswith(prefix):
+        if not isinstance(key, str):
             continue
-        codigo = key[len(prefix) :]
-        if codigo in valid and val is not None:
+        codigo = _codigo_desde_widget_key(key, valid)
+        if codigo and val is not None:
             resp[codigo] = val
 
 
@@ -246,12 +264,12 @@ def limpiar_respuestas_activas() -> None:
 
     valid = {i["codigo"] for i in load_indicadores()}
     respuestas_activas().clear()
-    prefix = "mdeia_"
     for key in list(st.session_state.keys()):
-        if isinstance(key, str) and key.startswith(prefix):
-            codigo = key[len(prefix) :]
-            if codigo in valid:
-                del st.session_state[key]
+        if not isinstance(key, str) or not key.startswith("mdeia_"):
+            continue
+        codigo = _codigo_desde_widget_key(key, valid)
+        if codigo:
+            del st.session_state[key]
     for k in ("mdeia_resultado", "mdeia_resultado_piloto", "mdeia_ultima_carga"):
         st.session_state.pop(k, None)
 

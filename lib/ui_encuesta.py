@@ -9,6 +9,7 @@ from typing import Any
 import pandas as pd
 import streamlit as st
 
+from lib.unidades import widget_key_respuesta
 
 _NIVEL_SLIDER = {
     0: "No implementado",
@@ -17,6 +18,19 @@ _NIVEL_SLIDER = {
     3: "Implementado",
     4: "Optimizado",
 }
+
+
+def _init_widget_desde_respuesta(
+    widget_key: str,
+    codigo: str,
+    respuestas: dict[str, Any],
+) -> bool:
+    """Prepara session_state; devuelve True si hay respuesta guardada."""
+    if codigo in respuestas:
+        st.session_state[widget_key] = respuestas[codigo]
+        return True
+    st.session_state.pop(widget_key, None)
+    return False
 
 
 def render_encuesta(
@@ -53,6 +67,7 @@ def render_encuesta(
             for idx, (_, row) in enumerate(grupo_rows):
                 codigo = row["codigo"]
                 tipo = row.get("tipo", "nivel")
+                wkey = widget_key_respuesta(codigo, ambito_unidad_id)
                 texto = str(row.get("texto", "")).strip()
                 if ambito_unidad_id:
                     texto = texto_indicador_para_ambito(texto, ambito_unidad_id)
@@ -64,41 +79,48 @@ def render_encuesta(
                     unsafe_allow_html=True,
                 )
                 if tipo == "si_no":
-                    val = st.radio(
-                        "Respuesta",
+                    tiene = _init_widget_desde_respuesta(wkey, codigo, respuestas)
+                    radio_kw = dict(
+                        label="Respuesta",
                         options=["No", "Sí"],
-                        index=0 if respuestas.get(codigo) != "Sí" else 1,
-                        key=f"mdeia_{codigo}",
+                        key=wkey,
                         horizontal=True,
                         label_visibility="collapsed",
                     )
+                    if not tiene:
+                        radio_kw["index"] = 0
+                    val = st.radio(**radio_kw)
                     respuestas[codigo] = val
                 elif tipo in {"porcentaje", "umbral"}:
-                    unidad = row.get("unidad") or "%"
-                    default = float(respuestas.get(codigo, 0) or 0)
-                    val = st.slider(
-                        f"Valor ({unidad})",
+                    tiene = _init_widget_desde_respuesta(wkey, codigo, respuestas)
+                    slider_kw = dict(
+                        label=f"Valor ({row.get('unidad') or '%'})",
                         min_value=0.0,
                         max_value=100.0,
-                        value=default,
-                        key=f"mdeia_{codigo}",
+                        key=wkey,
                         label_visibility="collapsed",
                     )
+                    if not tiene:
+                        slider_kw["value"] = 0.0
+                    val = st.slider(**slider_kw)
                     respuestas[codigo] = val
                 else:
                     opciones = list(niveles.keys())
-                    default = int(respuestas.get(codigo, 0) or 0)
-                    idx = opciones.index(default) if default in opciones else 0
-                    val = st.radio(
-                        "Nivel de madurez",
+                    tiene = _init_widget_desde_respuesta(wkey, codigo, respuestas)
+                    radio_kw = dict(
+                        label="Nivel de madurez",
                         options=opciones,
-                        index=idx,
                         format_func=lambda x: str(x),
-                        key=f"mdeia_{codigo}",
+                        key=wkey,
                         label_visibility="collapsed",
                         horizontal=True,
                     )
-                    st.caption(f"Nivel elegido: **{val} — {_NIVEL_SLIDER.get(val, niveles.get(val, ''))}**")
+                    if not tiene:
+                        radio_kw["index"] = 0
+                    val = st.radio(**radio_kw)
+                    st.caption(
+                        f"Nivel elegido: **{val} — {_NIVEL_SLIDER.get(val, niveles.get(val, ''))}**"
+                    )
                     respuestas[codigo] = val
                 if idx < len(grupo_rows) - 1:
                     st.markdown("---")
