@@ -50,6 +50,7 @@
     "estudiante": {
       "id": "estudiante",
       "nombre": "Estudiantes",
+      "google_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSc4ngUiTtRZKqd6lLdHjr-nUQAFwCt7kK2wTqS9nHXs7NtQRw/viewform",
       "descripcion": "Uso de IA, servicios digitales y satisfacción con plataformas institucionales.",
       "ambitos_permitidos": ["institucional", "sede", "facultad"],
       "poblacion_ejemplo": "Matrícula o lista de difusión de la encuesta",
@@ -166,6 +167,7 @@
     "docente": {
       "id": "docente",
       "nombre": "Docentes",
+      "google_form_url": "https://docs.google.com/forms/d/e/1FAIpQLScDY9SqYrjT6WYO-1xhqzRhF_edLb5UO0-bAffOpn6bqUIM6g/viewform",
       "descripcion": "Formación en IA, integridad académica, LMS y evaluación auténtica.",
       "ambitos_permitidos": ["institucional", "sede", "facultad"],
       "poblacion_ejemplo": "Docentes convocados por facultad o sede",
@@ -277,6 +279,7 @@
     "autoridad": {
       "id": "autoridad",
       "nombre": "Autoridades",
+      "google_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSfY-tOujGHw33X2RYkbWYMg46RzzU9Z-G4D0yMHB9ka-brKkw/viewform",
       "descripcion": "Estrategia digital, gobierno TI, financiación y gobernanza de IA (rectorado, decanato, secretarías).",
       "ambitos_permitidos": ["institucional", "sede"],
       "poblacion_ejemplo": "Miembros del equipo de gobierno, decanos, secretarios convocados",
@@ -371,6 +374,7 @@
     "administracion": {
       "id": "administracion",
       "nombre": "Personal administrativo",
+      "google_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSdcLGH81wZuDtVWbYBJmjPA962oOyG4ri468kjapb5rI6t9Ng/viewform",
       "descripcion": "Uso y satisfacción con sistemas de gestión, CAU y trámites digitalizados (depto. administrativo, secretarías).",
       "ambitos_permitidos": ["institucional", "sede", "depto_admin"],
       "poblacion_ejemplo": "Personal administrativo convocado (ej. Depto. Admin. San Juan)",

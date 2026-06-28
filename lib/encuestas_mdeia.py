@@ -41,9 +41,24 @@ def load_encuestas_config() -> dict:
 def listar_audiencias() -> list[dict]:
     cfg = load_encuestas_config()
     return [
-        {"id": k, "nombre": v["nombre"], "descripcion": v.get("descripcion", "")}
+        {
+            "id": k,
+            "nombre": v["nombre"],
+            "descripcion": v.get("descripcion", ""),
+            "google_form_url": v.get("google_form_url", ""),
+        }
         for k, v in cfg["audiencias"].items()
     ]
+
+
+def url_formulario_google(audiencia_id: str, *, overrides: dict[str, str] | None = None) -> str:
+    """URL pública del Google Form (config JSON o overrides desde secrets)."""
+    if overrides and audiencia_id in overrides:
+        url = str(overrides[audiencia_id]).strip()
+        if url:
+            return url
+    aud = audiencia_cfg(audiencia_id)
+    return str(aud.get("google_form_url") or "").strip()
 
 
 def audiencia_cfg(audiencia_id: str) -> dict:
