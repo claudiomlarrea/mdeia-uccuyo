@@ -1,0 +1,160 @@
+{
+  "fuente": "Consejo de Investigación · Producción Científica · Publicaciones UCCuyo · estructura por sede acordada 2026",
+  "grupos": [
+    {
+      "id": "institucional",
+      "nombre": "Institucional",
+      "tipo": "institucional",
+      "unidades": [
+        {
+          "id": "INSTITUCIONAL",
+          "sigla": "UCCuyo",
+          "nombre": "Universidad Católica de Cuyo — institución completa",
+          "label": "UCCuyo — Universidad Católica de Cuyo (institución completa)"
+        }
+      ]
+    },
+    {
+      "id": "mendoza",
+      "nombre": "Sede Mendoza",
+      "tipo": "sede",
+      "unidades": [
+        {
+          "id": "FBOSCO",
+          "sigla": "FBOSCO",
+          "nombre": "Facultad Don Bosco — Sede Mendoza",
+          "label": "FBOSCO- Facultad Don Bosco Sede Mendoza"
+        }
+      ]
+    },
+    {
+      "id": "san_luis",
+      "nombre": "Sede San Luis",
+      "tipo": "sede",
+      "unidades": [
+        {
+          "id": "FCMSL",
+          "sigla": "FCMSL",
+          "nombre": "Facultad de Ciencias Médicas Sede San Luis",
+          "label": "FCMSL- Facultad de Ciencias Médicas Sede San Luis"
+        },
+        {
+          "id": "FCVSL",
+          "sigla": "FCVSL",
+          "nombre": "Facultad de Ciencias Veterinarias Sede San Luis",
+          "label": "FCVSL- Facultad de Ciencias Veterinarias Sede San Luis"
+        },
+        {
+          "id": "FCEESL",
+          "sigla": "FCEESL",
+          "nombre": "Facultad de Ciencias Económicas y Empresariales Sede San Luis",
+          "label": "FCEESL- Facultad de Ciencias Económicas y Empresariales Sede San Luis"
+        },
+        {
+          "id": "FDCSSL",
+          "sigla": "FDCSSL",
+          "nombre": "Facultad de Derecho y Ciencias Sociales Sede San Luis",
+          "label": "FDCSSL- Facultad de Derecho y Ciencias Sociales Sede San Luis"
+        },
+        {
+          "id": "DEPT_ADMIN_SL",
+          "sigla": "D.A. SL",
+          "nombre": "Departamento Administrativo Sede San Luis",
+          "label": "Departamento Administrativo Sede San Luis"
+        }
+      ]
+    },
+    {
+      "id": "san_juan",
+      "nombre": "Sede San Juan",
+      "tipo": "sede",
+      "unidades": [
+        {
+          "id": "FCMSJ",
+          "sigla": "FCMSJ",
+          "nombre": "Facultad de Ciencias Médicas Sede San Juan",
+          "label": "FCMSJ- Facultad de Ciencias Médicas Sede San Juan"
+        },
+        {
+          "id": "FCQyTSJ",
+          "sigla": "FCQyTSJ",
+          "nombre": "Facultad de Ciencias Químicas y Tecnológicas Sede San Juan",
+          "label": "FCQyTSJ- Facultad de Ciencias Químicas y Tecnológicas Sede San Juan"
+        },
+        {
+          "id": "FCEESJ",
+          "sigla": "FCEESJ",
+          "nombre": "Facultad de Ciencias Económicas y Empresariales Sede San Juan",
+          "label": "FCEESJ- Facultad de Ciencias Económicas y Empresariales Sede San Juan"
+        },
+        {
+          "id": "FFyHSJ",
+          "sigla": "FFyHSJ",
+          "nombre": "Facultad de Filosofía y Humanidades Sede San Juan",
+          "label": "FFyHSJ- Facultad de Filosofía y Humanidades Sede San Juan"
+        },
+        {
+          "id": "FDCSSJ",
+          "sigla": "FDCSSJ",
+          "nombre": "Facultad de Derecho y Ciencias Sociales Sede San Juan",
+          "label": "FDCSSJ- Facultad de Derecho y Ciencias Sociales Sede San Juan"
+        },
+        {
+          "id": "ESEGSJ",
+          "sigla": "ESEGSJ",
+          "nombre": "Escuela de Seguridad Sede San Juan",
+          "label": "ESEGSJ- Escuela de Seguridad Sede San Juan"
+        },
+        {
+          "id": "ECRyPSJ",
+          "sigla": "ECRyPSJ",
+          "nombre": "Escuela de Cultura Religiosa y Pastoral Sede San Juan",
+          "label": "ECRyPSJ- Escuela de Cultura Religiosa y Pastoral Sede San Juan"
+        },
+        {
+          "id": "ISDSM",
+          "sigla": "ISDSM",
+          "nombre": "Instituto de Formación Docente Santa María Sede San Juan",
+          "label": "ISDSM- Instituto de Formación Docente Santa María Sede San Juan"
+        },
+        {
+          "id": "ISB",
+          "sigla": "ISB",
+          "nombre": "Instituto de Formación Docente San Buenaventura Sede San Juan",
+          "label": "ISB- Instituto de Formación Docente San Buenaventura Sede San Juan"
+        },
+        {
+          "id": "DEPT_ADMIN_SJ",
+          "sigla": "D.A. SJ",
+          "nombre": "Departamento Administrativo Sede San Juan",
+          "label": "Departamento Administrativo Sede San Juan"
+        }
+      ]
+    },
+    {
+      "id": "transversal",
+      "nombre": "Unidades transversales",
+      "tipo": "transversal",
+      "unidades": [
+        {
+          "id": "SEC_INV",
+          "sigla": "Sec. Inv.",
+          "nombre": "Secretaría de Investigación",
+          "label": "Secretaría de Investigación"
+        },
+        {
+          "id": "SEC_EXT",
+          "sigla": "Sec. Ext.",
+          "nombre": "Secretaría de Extensión",
+          "label": "Secretaría de Extensión"
+        },
+        {
+          "id": "OIA",
+          "sigla": "OIA",
+          "nombre": "Observatorio de Inteligencia Artificial",
+          "label": "OIA- Observatorio de Inteligencia Artificial"
+        }
+      ]
+    }
+  ]
+}
