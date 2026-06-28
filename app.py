@@ -508,7 +508,7 @@ elif seccion == "Encuesta estudiantil":
                 """
                 | Indicador | Valor automático |
                 |-----------|------------------|
-                | `MDEIA_IA_ENCUESTA` | Tasa de respuesta (%) o N respuestas si falta población |
+                | `MDEIA_IA_ENCUESTA` | Nivel 0–4 según tasa de respuesta OIA (≥ 70 % → nivel 4) |
                 | `MDEIA_IA_OBSERVATORIO` | Nivel 0–4 según volumen de respuestas |
                 """
             )
@@ -569,7 +569,7 @@ elif seccion == "Guía del diagnóstico":
 
         - Los datos **no se guardan solos** al cerrar el navegador: exportá JSON con frecuencia.
         - Para la **línea de base oficial**, usá **{FASE1_MENU}** ({FASE1_N_INDICADORES} indicadores).
-        - El catálogo completo (129) es para diagnósticos posteriores, no para la primera sesión.
+        - El catálogo completo (132) es para diagnósticos posteriores, no para la primera sesión.
         """
     )
     st.info(

@@ -769,9 +769,33 @@
   },
   {
     "codigo": "GEN_PRESUTOTALTINOCENTRAL",
-    "texto": "Presupuesto de TI para SERVICIOS NO CENTRALIZADOS (incluido personal) GEN_ PPRESUTICENTRALMANTIENE % de presupuesto de servicios TI centralizado dedicado a MANTENIMIENTO de infraestructuras ya en operación GEC_ PPRESUTICENTRALINVERSION % de presupuesto de servicios TI centralizados dedicado a INVERSIONES en nuevos proyectos TI GOM_ PLANFINANCIAPLURIANUALTI ¿Se ha diseñado un plan de financiación plurianual de las TI que establezca los recursos necesarios para satisfacer la estrategia institucional?",
+    "texto": "Presupuesto de TI para SERVICIOS NO CENTRALIZADOS (incluido personal)",
     "objetivo_num": 11,
     "objetivo": "Definir un plan de externalización que asegure la calidad de los servicios",
+    "comun": true,
+    "dimension_ia": false
+  },
+  {
+    "codigo": "GEN_PPRESUTICENTRALMANTIENE",
+    "texto": "% de presupuesto de servicios TI centralizado dedicado a MANTENIMIENTO de infraestructuras ya en explotación",
+    "objetivo_num": 11,
+    "objetivo": "Definir un plan de externalización que asegure la calidad de los servicios",
+    "comun": true,
+    "dimension_ia": false
+  },
+  {
+    "codigo": "GEC_PPRESUTICENTRALINVERSION",
+    "texto": "% de presupuesto de servicios TI centralizados dedicado a INVERSIONES en nuevos proyectos TI",
+    "objetivo_num": 11,
+    "objetivo": "Definir un plan de externalización que asegure la calidad de los servicios",
+    "comun": true,
+    "dimension_ia": false
+  },
+  {
+    "codigo": "GOM_PLANFINANCIAPLURIANUALTI",
+    "texto": "¿Se ha diseñado un plan de financiación plurianual de las TI que establezca los recursos necesarios para satisfacer la estrategia institucional?",
+    "objetivo_num": 12,
+    "objetivo": "Disponer del presupuesto suficiente y adecuado para impulsar la transformación digital",
     "comun": true,
     "dimension_ia": false
   },
