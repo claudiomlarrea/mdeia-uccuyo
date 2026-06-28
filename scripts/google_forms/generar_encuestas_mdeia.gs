@@ -4,6 +4,8 @@
  * Requiere autorizar Google Forms. Al final verás en Registro los enlaces para compartir.
  */
 
+var UNIDADES_MDEIA = ["Departamento Administrativo Sede San Juan", "Departamento Administrativo Sede San Luis", "ECRyPSJ- Escuela de Cultura Religiosa y Pastoral Sede San Juan", "ESEGSJ- Escuela de Seguridad Sede San Juan", "FBOSCO- Facultad Don Bosco Sede Mendoza", "FCEESJ- Facultad de Ciencias Económicas y Empresariales Sede San Juan", "FCEESL- Facultad de Ciencias Económicas y Empresariales Sede San Luis", "FCMSJ- Facultad de Ciencias Médicas Sede San Juan", "FCMSL- Facultad de Ciencias Médicas Sede San Luis", "FCQyTSJ- Facultad de Ciencias Químicas y Tecnológicas Sede San Juan", "FCVSL- Facultad de Ciencias Veterinarias Sede San Luis", "FDCSSJ- Facultad de Derecho y Ciencias Sociales Sede San Juan", "FDCSSL- Facultad de Derecho y Ciencias Sociales Sede San Luis", "FFyHSJ- Facultad de Filosofía y Humanidades Sede San Juan", "ISB- Instituto de Formación Docente San Buenaventura Sede San Juan", "ISDSM- Instituto de Formación Docente Santa María Sede San Juan", "OIA- Observatorio de Inteligencia Artificial", "Secretaría de Extensión", "Secretaría de Investigación", "UCCuyo — Universidad Católica de Cuyo (institución completa)"];
+
 function crearTodasLasEncuestasMDeIA() {
   var enlaces = [];
   enlaces.push(crearFormulario_estudiante());
@@ -24,8 +26,9 @@ function crearFormulario_estudiante() {
   var item = form.addListItem().setTitle("META_SEDE").setHelpText("¿En qué sede cursás principalmente?");
   item.setChoices(["San Juan", "San Luis", "Mendoza", "Otra / no aplica"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
-  var item = form.addTextItem().setTitle("META_UNIDAD").setHelpText("Facultad o unidad académica (sigla o nombre)");
-  item.setRequired(false);
+  var item = form.addListItem().setTitle("META_UNIDAD").setHelpText("Facultad o unidad académica (lista oficial MDeIA UCCuyo)");
+  item.setChoices(UNIDADES_MDEIA.map(function(o) { return item.createChoice(o); }));
+  item.setRequired(true);
   var item = form.addListItem().setTitle("IND_IA_USO__chatgpt").setHelpText("¿Con qué frecuencia usás herramientas de IA generativa (ChatGPT, Gemini, Copilot, etc.) para tus estudios?");
   item.setChoices(["Nunca", "Rara vez", "A veces", "Frecuentemente", "Siempre"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
@@ -74,8 +77,9 @@ function crearFormulario_docente() {
   var item = form.addListItem().setTitle("META_SEDE").setHelpText("¿En qué sede desarrollás principalmente tu actividad docente?");
   item.setChoices(["San Juan", "San Luis", "Mendoza", "Otra / no aplica"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
-  var item = form.addTextItem().setTitle("META_UNIDAD").setHelpText("Facultad o departamento académico");
-  item.setRequired(false);
+  var item = form.addListItem().setTitle("META_UNIDAD").setHelpText("Facultad o departamento académico (lista oficial MDeIA UCCuyo)");
+  item.setChoices(UNIDADES_MDEIA.map(function(o) { return item.createChoice(o); }));
+  item.setRequired(true);
   var item = form.addListItem().setTitle("IND_FORM_IA__recibida").setHelpText("¿Qué nivel de formación formal recibiste sobre IA aplicada a la docencia?");
   item.setChoices(["0 — No implementado", "1 — Inicial / ad hoc", "2 — En desarrollo", "3 — Implementado", "4 — Optimizado / referente"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
@@ -165,7 +169,8 @@ function crearFormulario_administracion() {
   var item = form.addListItem().setTitle("META_SEDE").setHelpText("¿En qué sede trabajás?");
   item.setChoices(["San Juan", "San Luis", "Mendoza", "Otra / no aplica"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
-  var item = form.addTextItem().setTitle("META_AREA").setHelpText("Área o departamento (ej. Depto. Administrativo SJ, Secretaría académica)");
+  var item = form.addListItem().setTitle("META_AREA").setHelpText("Área o unidad institucional (lista oficial MDeIA UCCuyo)");
+  item.setChoices(UNIDADES_MDEIA.map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
   var item = form.addListItem().setTitle("IND_SIU__uso_diario").setHelpText("¿Con qué frecuencia usás SIU-Guaraní u otros sistemas de gestión académica en tu trabajo diario?");
   item.setChoices(["Nunca", "Rara vez", "A veces", "Frecuentemente", "Siempre"].map(function(o) { return item.createChoice(o); }));

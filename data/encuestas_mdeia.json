@@ -63,9 +63,9 @@
         },
         {
           "columna": "META_UNIDAD",
-          "texto": "Facultad o unidad académica (sigla o nombre)",
-          "escala": "texto",
-          "requerida": false
+          "texto": "Facultad o unidad académica (lista oficial MDeIA UCCuyo)",
+          "escala": "meta_unidad",
+          "requerida": true
         },
         {
           "columna": "IND_IA_USO__chatgpt",
@@ -179,9 +179,9 @@
         },
         {
           "columna": "META_UNIDAD",
-          "texto": "Facultad o departamento académico",
-          "escala": "texto",
-          "requerida": false
+          "texto": "Facultad o departamento académico (lista oficial MDeIA UCCuyo)",
+          "escala": "meta_unidad",
+          "requerida": true
         },
         {
           "columna": "IND_FORM_IA__recibida",
@@ -384,8 +384,8 @@
         },
         {
           "columna": "META_AREA",
-          "texto": "Área o departamento (ej. Depto. Administrativo SJ, Secretaría académica)",
-          "escala": "texto",
+          "texto": "Área o unidad institucional (lista oficial MDeIA UCCuyo)",
+          "escala": "meta_unidad",
           "requerida": true
         },
         {

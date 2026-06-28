@@ -20,6 +20,19 @@ _DATA = Path(__file__).resolve().parent.parent / "data"
 _TIMESTAMP_HINTS = ("marca temporal", "timestamp", "fecha y hora", "fecha/hora")
 
 
+def lista_unidades_mdeia() -> list[str]:
+    """Etiquetas oficiales de unidades académicas (mismo catálogo que MDeIA)."""
+    with (_DATA / "unidades_academicas.json").open(encoding="utf-8") as f:
+        data = json.load(f)
+    labels: list[str] = []
+    for grupo in data.get("grupos", []):
+        for u in grupo.get("unidades", []):
+            label = str(u.get("label") or u.get("nombre") or u.get("id", "")).strip()
+            if label and label not in labels:
+                labels.append(label)
+    return sorted(labels, key=lambda s: s.upper())
+
+
 def load_encuestas_config() -> dict:
     with (_DATA / "encuestas_mdeia.json").open(encoding="utf-8") as f:
         return json.load(f)
@@ -56,7 +69,7 @@ def _resolve_column(df: pd.DataFrame, columna: str) -> str | None:
 
 
 def _escala_cfg(cfg: dict, escala_id: str) -> dict | None:
-    if escala_id in ("texto", "meta_sede"):
+    if escala_id in ("texto", "meta_sede", "meta_unidad"):
         return None
     return cfg["escalas"].get(escala_id)
 
@@ -256,6 +269,7 @@ def generar_plantilla_xlsx(audiencia_id: str) -> bytes:
         {"campo": "Instrucciones", "valor": cfg.get("instrucciones_generales", "")},
         {"campo": "Exportar Forms", "valor": "Google Forms → Respuestas → Descargar .xlsx"},
         {"campo": "Cargar MDeIA", "valor": "Encuestas por audiencia → Cargar respuestas"},
+        {"campo": "Unidades MDeIA", "valor": "; ".join(lista_unidades_mdeia())},
     ]
     for p in preguntas:
         filas_inst.append(
@@ -295,12 +309,15 @@ def _formatear_hoja_plantilla(writer: pd.ExcelWriter, headers: list[str]) -> Non
 def generar_apps_script_google_forms() -> str:
     """Genera script de Google Apps Script para crear los 4 formularios."""
     cfg = load_encuestas_config()
+    unidades_js = json.dumps(lista_unidades_mdeia(), ensure_ascii=False)
     lines = [
         "/**",
         " * MDeIA UCCuyo — Generador de encuestas Google Forms",
         " * Uso: script.google.com → Nuevo proyecto → pegar → ejecutar crearTodasLasEncuestasMDeIA",
         " * Requiere autorizar Google Forms. Al final verás en Registro los enlaces para compartir.",
         " */",
+        "",
+        f"var UNIDADES_MDEIA = {unidades_js};",
         "",
         "function crearTodasLasEncuestasMDeIA() {",
         "  var enlaces = [];",
@@ -345,15 +362,22 @@ def generar_apps_script_google_forms() -> str:
             else:
                 if escala == "meta_sede":
                     opts = p.get("opciones") or ["San Juan", "San Luis", "Mendoza"]
+                elif escala == "meta_unidad":
+                    opts = None  # usa UNIDADES_MDEIA en JS
                 else:
                     opts = cfg["escalas"].get(escala, {}).get("opciones", [])
-                opts_js = json.dumps(opts, ensure_ascii=False)
                 lines.append(
                     f"  var item = form.addListItem().setTitle({title}).setHelpText({help_text});"
                 )
-                lines.append(
-                    f"  item.setChoices({opts_js}.map(function(o) {{ return item.createChoice(o); }}));"
-                )
+                if escala == "meta_unidad":
+                    lines.append(
+                        "  item.setChoices(UNIDADES_MDEIA.map(function(o) { return item.createChoice(o); }));"
+                    )
+                else:
+                    opts_js = json.dumps(opts, ensure_ascii=False)
+                    lines.append(
+                        f"  item.setChoices({opts_js}.map(function(o) {{ return item.createChoice(o); }}));"
+                    )
                 lines.append(f"  item.setRequired({req});")
 
         lines.append("  var url = form.getPublishedUrl();")
