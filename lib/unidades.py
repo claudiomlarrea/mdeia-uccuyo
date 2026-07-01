@@ -95,16 +95,40 @@ def unidades_index() -> dict[str, dict]:
     return idx
 
 
+def _adaptar_texto_institucional(texto: str) -> str:
+    """Reformula enunciados UDigital para ámbito universidad completa (sin prefijo ni redundancias)."""
+    t = texto.strip()
+    casos = {
+        "¿Dispone su institución de una estrategia digital incluida o alineada con la estrategia de la institución?": (
+            "¿Dispone la Universidad de una estrategia digital incluida o alineada con la estrategia institucional?"
+        ),
+        "¿Dispone su institución de una estrategia de negocio institucional definida formalmente?": (
+            "¿Dispone la Universidad de una estrategia de negocio institucional definida formalmente?"
+        ),
+    }
+    if t in casos:
+        return casos[t]
+    for viejo, nuevo in (
+        ("su institución", "la Universidad"),
+        ("Su institución", "La Universidad"),
+        ("la institución", "la Universidad"),
+        ("La institución", "La Universidad"),
+    ):
+        t = t.replace(viejo, nuevo)
+    t = t.replace(
+        "estrategia digital incluida o alineada con la estrategia de la Universidad",
+        "estrategia digital incluida o alineada con la estrategia institucional",
+    )
+    return t
+
+
 def texto_indicador_para_ambito(texto: str, unidad_id: str) -> str:
     """Adapta el enunciado al ámbito institucional, sede o facultad."""
     u = unidad_por_id(unidad_id)
     if not u:
         return texto
     if u.get("es_institucional_consolidada"):
-        return (
-            f"Ámbito: {INSTITUTION_NAME} (toda la institución, todas las sedes y unidades). "
-            f"{texto}"
-        )
+        return _adaptar_texto_institucional(texto)
     if not u.get("es_sede_consolidada"):
         return texto
     sede = u.get("grupo_nombre", "esta sede")
