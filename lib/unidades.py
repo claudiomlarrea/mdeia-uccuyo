@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -123,6 +124,80 @@ def _adaptar_texto_institucional(texto: str) -> str:
     return legibilizar_siglas_udigital(t)
 
 
+_UNIV_REF = "la Institución o Universidad"
+_PH_OTRAS_ENT = "\x00OTRAS_INST_ENT\x00"
+_PH_OTRAS = "\x00OTRAS_INST\x00"
+_PH_INTEROP = "\x00INST_INTEROP\x00"
+
+
+def _adaptar_texto_sede(texto: str) -> str:
+    """Reformula enunciados UDigital para diagnóstico de sede (sede vs universidad madre)."""
+    t = texto.strip()
+    casos = {
+        "¿Dispone su institución de una estrategia digital incluida o alineada con la estrategia de la institución?": (
+            f"¿Dispone su sede de una estrategia digital incluida o alineada con la estrategia de {_UNIV_REF}?"
+        ),
+        "¿Dispone su institución de una estrategia de negocio institucional definida formalmente?": (
+            f"¿Dispone su sede de una estrategia de negocio definida formalmente y alineada con {_UNIV_REF}?"
+        ),
+    }
+    if t in casos:
+        return casos[t]
+
+    t = t.replace("otras instituciones o entidades", _PH_OTRAS_ENT)
+    t = t.replace(
+        "Nº de instituciones con las que se relaciona la institución",
+        _PH_INTEROP,
+    )
+    t = t.replace("otras instituciones", _PH_OTRAS)
+
+    t = re.sub(
+        r"(?i)con la estrategia de la institución\b",
+        f"con la estrategia de {_UNIV_REF}",
+        t,
+    )
+    t = re.sub(
+        r"(?i)alinead[oa]s? con su estrategia\b",
+        f"alineado con la estrategia de {_UNIV_REF}",
+        t,
+    )
+    t = re.sub(
+        r"(?i)satisfacer la estrategia institucional\b",
+        f"satisfacer la estrategia de {_UNIV_REF}",
+        t,
+    )
+    t = re.sub(
+        r"(?i)la estrategia institucional\b",
+        f"la estrategia de {_UNIV_REF}",
+        t,
+    )
+    t = re.sub(
+        r"(?i)estrategia de negocio institucional\b",
+        f"estrategia de negocio de la sede alineada con {_UNIV_REF}",
+        t,
+    )
+
+    for viejo, nuevo in (
+        ("está su institución", "está su sede"),
+        ("Ha diseñado y ejecutado su institución", "Ha diseñado y ejecutado su sede"),
+        ("su institución", "su sede"),
+        ("Su institución", "Su sede"),
+        ("de su institución", "de su sede"),
+        ("en su institución", "en su sede"),
+        ("la institución", "la sede"),
+        ("La institución", "La sede"),
+    ):
+        t = t.replace(viejo, nuevo)
+
+    t = t.replace(_PH_OTRAS_ENT, "otras instituciones o entidades")
+    t = t.replace(_PH_OTRAS, "otras instituciones")
+    t = t.replace(
+        _PH_INTEROP,
+        "Nº de instituciones con las que se relaciona la sede",
+    )
+    return t
+
+
 def _texto_ambito_final(texto: str) -> str:
     return legibilizar_siglas_udigital(texto)
 
@@ -137,14 +212,7 @@ def texto_indicador_para_ambito(texto: str, unidad_id: str) -> str:
     if not u.get("es_sede_consolidada"):
         return _texto_ambito_final(texto)
     sede = u.get("grupo_nombre", "esta sede")
-    t = texto
-    for viejo, nuevo in (
-        ("la institución", "la sede"),
-        ("La institución", "La sede"),
-        ("institución", "sede"),
-        ("Institución", "Sede"),
-    ):
-        t = t.replace(viejo, nuevo)
+    t = _adaptar_texto_sede(texto)
     return legibilizar_siglas_udigital(
         f"Ámbito: {sede} (evaluar la sede en su totalidad, no una sola facultad). "
         f"{t}"

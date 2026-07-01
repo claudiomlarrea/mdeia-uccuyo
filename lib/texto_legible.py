@@ -51,7 +51,7 @@ def legibilizar_siglas_udigital(texto: str) -> str:
         t = re.sub(patron, reemplazo, t, flags=re.IGNORECASE)
     # TI suelta que no quedó dentro de «(TI)»
     t = re.sub(r"(?<!\()\bTI\b(?!\))", _TI, t, flags=re.IGNORECASE)
-    t = re.sub(r"\bEG\b", "equipo de gobierno (EG)", t)
+    t = re.sub(r"(?<!equipo de gobierno \()\bEG\b(?!\))", "equipo de gobierno (EG)", t)
     return t
 
 
