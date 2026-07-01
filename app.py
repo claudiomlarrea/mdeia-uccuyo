@@ -194,11 +194,15 @@ seccion = st.session_state.mdeia_seccion
 
 def _meta_informe_widgets() -> dict:
     m = dict(meta_informe_activa())
+    fallback = date.today().isoformat()
     c1, c2, c3 = st.columns(3)
     with c1:
-        m["fecha"] = st.date_input("Fecha del informe", value=date.fromisoformat(m["fecha"])).isoformat()
+        m["fecha"] = st.date_input(
+            "Fecha del informe",
+            value=date.fromisoformat(m.get("fecha") or fallback),
+        ).isoformat()
     with c2:
-        m["responsable"] = st.text_input("Responsable", value=m["responsable"])
+        m["responsable"] = st.text_input("Responsable", value=m.get("responsable", ""))
     with c3:
         m["sede"] = st.text_input("Ámbito / unidad", value=m.get("sede") or unidad_label(st.session_state.mdeia_unidad_activa))
     actualizar_meta_informe_activa(m)

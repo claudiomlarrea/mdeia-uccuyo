@@ -244,7 +244,10 @@ def _slot(unidad_id: str | None = None) -> dict:
     init_session_store()
     uid = unidad_id or st.session_state.mdeia_unidad_activa
     if uid == SIN_UNIDAD:
-        return {"respuestas": {}, "meta_informe": {}}
+        return {
+            "respuestas": {},
+            "meta_informe": _default_meta_informe(DEFAULT_UNIDAD),
+        }
     if uid not in st.session_state.mdeia_unidades_data:
         st.session_state.mdeia_unidades_data[uid] = _empty_unidad_data(uid)
     return st.session_state.mdeia_unidades_data[uid]
@@ -304,7 +307,12 @@ def limpiar_respuestas_activas() -> None:
 
 
 def meta_informe_activa() -> dict:
-    return _slot()["meta_informe"]
+    uid = st.session_state.get("mdeia_unidad_activa", SIN_UNIDAD)
+    meta = _slot()["meta_informe"]
+    base_uid = uid if hay_unidad_activa() else DEFAULT_UNIDAD
+    for key, val in _default_meta_informe(base_uid).items():
+        meta.setdefault(key, val)
+    return meta
 
 
 def set_unidad_activa(unidad_id: str) -> None:
