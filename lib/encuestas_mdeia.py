@@ -15,6 +15,7 @@ from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
 from lib.oia_encuesta import nivel_encuesta, nivel_observatorio
+from lib.texto_legible import legibilizar_siglas_udigital
 
 _DATA = Path(__file__).resolve().parent.parent / "data"
 _TIMESTAMP_HINTS = ("marca temporal", "timestamp", "fecha y hora", "fecha/hora")
@@ -44,7 +45,7 @@ def listar_audiencias() -> list[dict]:
         {
             "id": k,
             "nombre": v["nombre"],
-            "descripcion": v.get("descripcion", ""),
+            "descripcion": legibilizar_siglas_udigital(v.get("descripcion", "")),
             "google_form_url": v.get("google_form_url", ""),
         }
         for k, v in cfg["audiencias"].items()
@@ -290,7 +291,7 @@ def generar_plantilla_xlsx(audiencia_id: str) -> bytes:
         filas_inst.append(
             {
                 "campo": p["columna"],
-                "valor": f"{p['texto']} [{p.get('escala', 'texto')}]",
+                "valor": f"{legibilizar_siglas_udigital(p['texto'])} [{p.get('escala', 'texto')}]",
             }
         )
     df_inst = pd.DataFrame(filas_inst)
@@ -350,7 +351,7 @@ def generar_apps_script_google_forms() -> str:
 
     for aud_id, aud in cfg["audiencias"].items():
         titulo = f"MDeIA UCCuyo — Encuesta {aud['nombre']}"
-        desc = aud.get("descripcion", "")
+        desc = legibilizar_siglas_udigital(aud.get("descripcion", ""))
         lines.append(f"function crearFormulario_{aud_id}() {{")
         lines.append(f"  var form = FormApp.create({json.dumps(titulo, ensure_ascii=False)});")
         lines.append(f"  form.setDescription({json.dumps(desc, ensure_ascii=False)});")
@@ -363,7 +364,7 @@ def generar_apps_script_google_forms() -> str:
 
         for p in aud.get("preguntas", []):
             col = p["columna"]
-            texto = p.get("texto", col)
+            texto = legibilizar_siglas_udigital(p.get("texto", col))
             escala = p.get("escala", "texto")
             req = "true" if p.get("requerida") else "false"
             title = json.dumps(col, ensure_ascii=False)

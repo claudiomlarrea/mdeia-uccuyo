@@ -10,6 +10,7 @@ import pandas as pd
 import streamlit as st
 
 from lib.unidades import widget_key_respuesta
+from lib.texto_legible import leyenda_siglas_markdown, legibilizar_siglas_udigital
 
 _NIVEL_SLIDER = {
     0: "No implementado",
@@ -49,6 +50,8 @@ def render_encuesta(
         st.warning("No hay indicadores para mostrar con los filtros actuales.")
         return
 
+    st.info(leyenda_siglas_markdown())
+
     grupos = df_ind.groupby(agrupar_por, dropna=False)
     for key, grupo in grupos:
         if titulo_grupo_fn:
@@ -71,6 +74,8 @@ def render_encuesta(
                 texto = str(row.get("texto", "")).strip()
                 if ambito_unidad_id:
                     texto = texto_indicador_para_ambito(texto, ambito_unidad_id)
+                else:
+                    texto = legibilizar_siglas_udigital(texto)
                 st.markdown(
                     f'<div class="mdeia-indicador">'
                     f'<p class="mdeia-indicador-codigo"><code>{html.escape(codigo)}</code></p>'

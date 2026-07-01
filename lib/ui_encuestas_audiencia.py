@@ -20,6 +20,7 @@ from lib.encuestas_mdeia import (
     url_formulario_google,
 )
 from lib.oia_encuesta import load_uploaded_file
+from lib.texto_legible import leyenda_siglas_markdown
 from lib.unidades import reemplazar_respuestas_activas, respuestas_activas, unidad_label
 
 _ICONOS = {
@@ -94,6 +95,7 @@ def render_encuestas_audiencia() -> None:
 
     st.subheader("Encuestas por audiencia")
     st.caption(f"Ámbito activo en MDeIA: **{unidad_label(st.session_state.mdeia_unidad_activa)}**")
+    st.info(leyenda_siglas_markdown())
 
     st.markdown("### 1 · Compartir encuestas Google (OIA)")
     st.info(

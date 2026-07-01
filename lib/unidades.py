@@ -11,6 +11,7 @@ from typing import Any
 import streamlit as st
 
 from constants import FASE1_CORTO, IMD_FASE1_LABEL, INSTITUTION_NAME
+from lib.texto_legible import legibilizar_siglas_udigital
 from lib.mdeia_model import calcular_imd, load_indicadores, normalizar_respuestas, pilot_codigos, progreso_piloto
 
 _DATA = Path(__file__).resolve().parent.parent / "data"
@@ -119,18 +120,22 @@ def _adaptar_texto_institucional(texto: str) -> str:
         "estrategia digital incluida o alineada con la estrategia de la Universidad",
         "estrategia digital incluida o alineada con la estrategia institucional",
     )
-    return t
+    return legibilizar_siglas_udigital(t)
+
+
+def _texto_ambito_final(texto: str) -> str:
+    return legibilizar_siglas_udigital(texto)
 
 
 def texto_indicador_para_ambito(texto: str, unidad_id: str) -> str:
     """Adapta el enunciado al ámbito institucional, sede o facultad."""
     u = unidad_por_id(unidad_id)
     if not u:
-        return texto
+        return legibilizar_siglas_udigital(texto)
     if u.get("es_institucional_consolidada"):
         return _adaptar_texto_institucional(texto)
     if not u.get("es_sede_consolidada"):
-        return texto
+        return _texto_ambito_final(texto)
     sede = u.get("grupo_nombre", "esta sede")
     t = texto
     for viejo, nuevo in (
@@ -140,7 +145,7 @@ def texto_indicador_para_ambito(texto: str, unidad_id: str) -> str:
         ("Institución", "Sede"),
     ):
         t = t.replace(viejo, nuevo)
-    return (
+    return legibilizar_siglas_udigital(
         f"Ámbito: {sede} (evaluar la sede en su totalidad, no una sola facultad). "
         f"{t}"
     )

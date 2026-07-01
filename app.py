@@ -45,6 +45,7 @@ from lib.mdeia_model import (
 )
 from lib.informe import generar_informe_html
 from lib.ui_encuesta import render_encuesta
+from lib.texto_legible import leyenda_siglas_markdown
 from lib.ui_encuestas_audiencia import render_encuestas_audiencia
 from lib.ui_informe_auto import render_informe_automatico
 from lib.ui_unidades import render_panel_unidades
@@ -137,6 +138,8 @@ with st.sidebar:
         key="mdeia_seccion",
         label_visibility="collapsed",
     )
+    st.markdown("---")
+    st.caption(leyenda_siglas_markdown())
     st.markdown("---")
     m = metricas_sidebar_activa()
     st.metric(FASE1_CORTO, m["linea_base"])
@@ -320,7 +323,8 @@ elif seccion == "Guía del diagnóstico":
         f"""
         El **MDeIA UCCuyo** no se conecta automáticamente a SIU ni a bases externas (por ahora).
         Los integrantes del Observatorio **cargan los datos manualmente** en la encuesta, a partir
-        de evidencia institucional, entrevistas con TI y resultados de las encuestas del OIA.
+        de evidencia institucional, entrevistas con el área de tecnologías de la información (TI)
+        y resultados de las encuestas del OIA.
 
         ### Flujo automático (recomendado)
 
@@ -340,7 +344,7 @@ elif seccion == "Guía del diagnóstico":
 
         ### Fuentes de datos sugeridas
 
-        - **TI / Sistemas:** presupuesto TI, personal, seguridad, LMS, servicios digitalizados.
+        - **Tecnologías de la información (TI) / Sistemas:** presupuesto, personal, seguridad, LMS y servicios digitalizados.
         - **OIA:** encuesta estudiantil de IA, observatorio, propuestas de guía ética.
         - **Secretaría / Rectorado:** estrategia institucional, planes de formación docente.
         - **Sesión conjunta (90 min):** consensuar niveles cuando no hay dato exacto.
