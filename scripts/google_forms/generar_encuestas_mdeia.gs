@@ -130,10 +130,10 @@ function crearFormulario_autoridad() {
   var item = form.addListItem().setTitle("IND_ESTRATEGIA_UNI").setHelpText("¿En qué nivel existe estrategia de negocio institucional formalmente definida?");
   item.setChoices(["0 — No implementado", "1 — Inicial / ad hoc", "2 — En desarrollo", "3 — Implementado", "4 — Optimizado / referente"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
-  var item = form.addListItem().setTitle("IND_LIDERAZGO_RECTOR").setHelpText("¿En qué nivel el Rectorado y equipo de gobierno lideran la planificación estratégica de TI y transformación digital?");
+  var item = form.addListItem().setTitle("IND_LIDERAZGO_RECTOR").setHelpText("¿En qué nivel el Rectorado y equipo de gestión lideran la planificación estratégica de TI y transformación digital?");
   item.setChoices(["0 — No implementado", "1 — Inicial / ad hoc", "2 — En desarrollo", "3 — Implementado", "4 — Optimizado / referente"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
-  var item = form.addListItem().setTitle("IND_PLAN_TD").setHelpText("¿En qué nivel existe un Plan de Transformación Digital aprobado por el equipo de gobierno?");
+  var item = form.addListItem().setTitle("IND_PLAN_TD").setHelpText("¿En qué nivel existe un Plan de Transformación Digital aprobado por el equipo de gestión?");
   item.setChoices(["0 — No implementado", "1 — Inicial / ad hoc", "2 — En desarrollo", "3 — Implementado", "4 — Optimizado / referente"].map(function(o) { return item.createChoice(o); }));
   item.setRequired(true);
   var item = form.addListItem().setTitle("IND_MODELO_GOBIERNO_TI").setHelpText("¿En qué nivel está implementado el modelo de gobierno de TI (roles, comités, políticas)?");

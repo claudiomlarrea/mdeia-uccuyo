@@ -282,7 +282,7 @@
       "google_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSfY-tOujGHw33X2RYkbWYMg46RzzU9Z-G4D0yMHB9ka-brKkw/viewform",
       "descripcion": "Estrategia digital, gobierno TI, financiación y gobernanza de IA (rectorado, decanato, secretarías).",
       "ambitos_permitidos": ["institucional", "sede"],
-      "poblacion_ejemplo": "Miembros del equipo de gobierno, decanos, secretarios convocados",
+      "poblacion_ejemplo": "Miembros del equipo de gestión, decanos, secretarios convocados",
       "preguntas": [
         {
           "columna": "META_CARGO",
@@ -311,13 +311,13 @@
         },
         {
           "columna": "IND_LIDERAZGO_RECTOR",
-          "texto": "¿En qué nivel el Rectorado y equipo de gobierno lideran la planificación estratégica de TI y transformación digital?",
+          "texto": "¿En qué nivel el Rectorado y equipo de gestión lideran la planificación estratégica de TI y transformación digital?",
           "escala": "madurez",
           "requerida": true
         },
         {
           "columna": "IND_PLAN_TD",
-          "texto": "¿En qué nivel existe un Plan de Transformación Digital aprobado por el equipo de gobierno?",
+          "texto": "¿En qué nivel existe un Plan de Transformación Digital aprobado por el equipo de gestión?",
           "escala": "madurez",
           "requerida": true
         },

@@ -51,13 +51,13 @@ def legibilizar_siglas_udigital(texto: str) -> str:
         t = re.sub(patron, reemplazo, t, flags=re.IGNORECASE)
     # TI suelta que no quedó dentro de «(TI)»
     t = re.sub(r"(?<!\()\bTI\b(?!\))", _TI, t, flags=re.IGNORECASE)
-    t = re.sub(r"(?<!equipo de gobierno \()\bEG\b(?!\))", "equipo de gobierno (EG)", t)
+    t = t.replace("equipo de gobierno (EG)", "equipo de gestión")
+    t = re.sub(r"\bEG\b", "equipo de gestión", t)
     return t
 
 
 def leyenda_siglas_markdown() -> str:
     return (
         "**Siglas usadas en el diagnóstico:** "
-        "**TI** = tecnologías de la información (sistemas, software, redes, soporte y servicios digitales institucionales). "
-        "**EG** = equipo de gobierno universitario (Rectorado y autoridades)."
+        "**TI** = tecnologías de la información (sistemas, software, redes, soporte y servicios digitales institucionales)."
     )
